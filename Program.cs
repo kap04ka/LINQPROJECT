@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+
 
 namespace LINQPROJECT
 {
@@ -16,6 +18,12 @@ namespace LINQPROJECT
 
             Random rand = new Random();
 
+            /*int[] arr = new int[amountOfNumbers];
+            arr = Enumerable.Range(0, amountOfNumbers).Select(s => new Random(s).Next(amountOfNumbers)).ToArray();
+
+            int[] parallelArr = new int[amountOfNumbers];
+            parallelArr = ParallelEnumerable.Range(0, amountOfNumbers).Select(s => new Random(s).Next(amountOfNumbers)).ToArray();
+*/
             for (int i = 0; i < randArray.Length; i++)
             {
                 randArray[i] = rand.Next(100000);
@@ -39,6 +47,8 @@ namespace LINQPROJECT
 
                 operationType = Convert.ToInt32(Console.ReadLine());
                 int[] result;
+                double time = 0.0;
+                Stopwatch stopWatch = new Stopwatch();
 
                 Func<int, int, bool> IsEven = (num, index) => num % 2 == 0;
                 Func<int, int, bool> IsOdd = (num, index) => num % 2 == 1;
@@ -52,74 +62,132 @@ namespace LINQPROJECT
                 switch (operationType)
                 {
                     case 1:
+                        stopWatch.Start();
+
                         result = randArray.Where(IsEven).OrderBy(Ordered).ToArray();
                         foreach (int i in result)
                         {
                             System.Console.WriteLine("{0} ", i);
                         }
+
+                        stopWatch.Stop();
+                        time = stopWatch.Elapsed.TotalMilliseconds;
+                        System.Console.WriteLine("Время = {0} ", time);
+
                         break;
 
                     case 2:
+                        stopWatch.Start();
+
                         result = randArray.Where(IsOdd).OrderBy(Ordered).ToArray();
                         foreach (int i in result)
                         {
                             System.Console.WriteLine("{0} ", i);
                         }
+
+                        stopWatch.Stop();
+                        time = stopWatch.Elapsed.TotalMilliseconds;
+                        System.Console.WriteLine("Время = {0} ", time);
+
                         break;
 
                     case 3:
+                        stopWatch.Start();
+
                         result = randArray.Select(NumberToString).Where(LengthGT1).Where(IsFirstPlusLastElemEqualSix).Select(StringToNumber).OrderBy(Ordered).ToArray();
                         foreach (int i in result)
                         {
                             System.Console.WriteLine("{0} ", i);
                         }
+
+                        stopWatch.Stop();
+                        time = stopWatch.Elapsed.TotalMilliseconds;
+                        System.Console.WriteLine("Время = {0} ", time);
+
                         break;
 
                     case 4:
+                        stopWatch.Start();
+
                         result = randArray.Select(NumberToString).Where(Contains666).Select(StringToNumber).OrderBy(Ordered).ToArray();
                         foreach (int i in result)
                         {
                             System.Console.WriteLine("{0} ", i);
                         }
+
+                        stopWatch.Stop();
+                        time = stopWatch.Elapsed.TotalMilliseconds;
+                        System.Console.WriteLine("Время = {0} ", time);
+
                         break;
 
                     case 11:
+                        stopWatch.Start();
+
                         result = randArray.AsParallel().Where(IsEven).OrderBy(Ordered).ToArray();
                         foreach (int i in result)
                         {
                             System.Console.WriteLine("{0} ", i);
                         }
+
+                        stopWatch.Stop();
+                        time = stopWatch.Elapsed.TotalMilliseconds;
+                        System.Console.WriteLine("Время = {0} ", time);
+
                         break;
 
                     case 12:
+                        stopWatch.Start();
+
                         result = randArray.AsParallel().Where(IsOdd).OrderBy(Ordered).ToArray();
                         foreach (int i in result)
                         {
                             System.Console.WriteLine("{0} ", i);
                         }
+
+                        stopWatch.Stop();
+                        time = stopWatch.Elapsed.TotalMilliseconds;
+                        System.Console.WriteLine("Время = {0} ", time);
+
                         break;
 
                     case 13:
+                        stopWatch.Start();
+
                         result = randArray.AsParallel().Select(NumberToString).Where(LengthGT1).Where(IsFirstPlusLastElemEqualSix).Select(StringToNumber).OrderBy(Ordered).ToArray();
                         foreach (int i in result)
                         {
                             System.Console.WriteLine("{0} ", i);
                         }
+
+                        stopWatch.Stop();
+                        time = stopWatch.Elapsed.TotalMilliseconds;
+                        System.Console.WriteLine("Время = {0} ", time);
+
                         break;
 
                     case 14:
+                        stopWatch.Start();
+
                         result = randArray.AsParallel().Select(NumberToString).Where(Contains666).Select(StringToNumber).OrderBy(Ordered).ToArray();
                         foreach (int i in result)
                         {
                             System.Console.WriteLine("{0} ", i);
                         }
+
+                        stopWatch.Stop();
+                        time = stopWatch.Elapsed.TotalMilliseconds;
+                        System.Console.WriteLine("Время = {0} ", time);
+
                         break;
 
                     default:
                         break;
                 }
 
+
             }
+
         }
     }
 }
